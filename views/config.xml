@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record model="ir.ui.view" id="asft_pettycash_type_tree">
+            <field name="name">asft.pettycash.type.tree</field>
+            <field name="model">asft.pettycash.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="account" required="1"/>
+                    <field name="journal_id" required="1"/>
+                    <field name="journal_exp_id"/>
+                    <field name="pic" required="1"/>
+                </tree>
+            </field>
+        </record>
+        <!-- search view -->
+        <record model="ir.ui.view"  id="asft_pettycash_type_search">
+            <field name="name">asft.pettycash.type.search</field>
+            <field name="model">asft.pettycash.type</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Description"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                </search>
+            </field>
+        </record>
+        <!-- Form View -->
+        <record model="ir.ui.view" id="asft_pettycash_type_form">
+            <field name="name">asft.pettycash.type.form</field>
+            <field name="model">asft.pettycash.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="pic" required="1"/>
+                                <field name="fullfillment"/>
+                            </group>
+                            <group>
+                                <field name="account" required="1"/>
+                                <field name="journal_id" required="1"/>
+                                <field name="journal_exp_id" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Treshold" invisible="fullfillment ==  False">
+                                <field name="treshold_min"/>
+                                <field name="treshold_max"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="asft_pettycash_type_action">
+            <field name="name">Pettycash Type</field>
+            <field name="res_model">asft.pettycash.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,30 @@
+{
+    'name': 'Module Pattycash',
+    'version': '17.0.0.1',
+    'summary': 'Form Pengisian Pattycash',
+    'author': 'albisoft.co.id',
+    'description': 'Form Pengisian Pattycash',
+    'price' : 0,
+    'currency' : 'USD',
+    'company': 'albisoft.co.id',
+    'website': 'https://albisoft.co.id',
+    'depends': [
+        'base','mail','account_accountant'
+    ],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/sequence.xml',
+        'views/pettycash.xml',
+        'views/expenses.xml',
+        'views/config.xml',
+        'views/menu_items.xml',
+    ],
+    'maintainer': 'albisoft.co.id',
+    'demo': [],
+    'installable': True,
+    'application': False,
+    'auto_install': False,
+    'license': 'OPL-1',
+    'support': 'admin@albisoft.co.id',
+}

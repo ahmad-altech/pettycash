@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- List View -->
+        <record model="ir.ui.view" id="asft_pettycash_tree">
+            <field name="name">asft.pettycash.tree</field>
+            <field name="model">asft.pettycash</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="submit_date"/>
+                    <field name="pettycash_type"/>
+                    <field name="request_amount"/>
+                    <field name="state" widget="badge"
+                           decoration-muted="state == 'draft'"
+                           decoration-warning="state == 'submit'"
+                           decoration-info="state == 'posted'"
+                           decoration-success="state == 'approved'"
+                           decoration-danger="state == 'rejected'"
+                           optional="show"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- Form View -->
+        <record model="ir.ui.view" id="asft_pettycash_form">
+            <field name="name">asft.pettycash.form</field>
+            <field name="model">asft.pettycash</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_draft" string="Set Draft" invisible="state != 'rejected'" type="object"/>
+                        <button class="btn btn-primary" name="action_submit" string="Submit" invisible="state != 'draft'" type="object"/>
+                        <button class="btn btn-primary" groups="asft_pettycash.group_pettycash_manager" name="action_approve" string="Approve" invisible="state != 'submit'" type="object"/>
+                        <button class="btn btn-danger" groups="asft_pettycash.group_pettycash_manager" name="action_rejected" string="Reject" invisible="state != 'submit'" type="object"/>
+                        <button class="btn btn-primary" groups="asft_pettycash.group_pettycash_manager" name="action_posted" string="Post" invisible="state != 'approved'" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="No Document"/>
+                            <h2><field name="name" readonly="1"/></h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" invisible="1"/>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="submit_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Pettycash Info">
+                                <group>
+                                    <group string="Pettycash">
+                                        <field readonly="state != 'draft'" name="pettycash_type" required="1" domain="[('pic', '=', user_id)]" options="{'no_open': True, 'no_create': True}"/>
+                                        <field readonly="state != 'draft'" name="request_amount" required="1"/>
+                                        <field name="notes" readonly="state != 'draft'" placeholder="Pettycash Notes"/>
+                                    </group>
+                                    <group string="Acounting">
+                                        <field name="account" string="Debit Account"/>
+                                        <field name="credit_account" readonly="state != 'submit'" groups="asft_pettycash.group_pettycash_manager"/>
+                                        <field name="journal_id" readonly="state != 'submit'" groups="asft_pettycash.group_pettycash_manager"/>
+                                        <field name="account_move_id" string="Jurnal Entires" groups="asft_pettycash.group_pettycash_manager" readonly="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <!-- search view -->
+        <record model="ir.ui.view"  id="asft_pettycash_search">
+            <field name="name">asft.pettycash.search</field>
+            <field name="model">asft.pettycash</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Code"/>
+                    <filter string="Submit" name="filter_status_submit" domain="[('state', '=', 'submit')]"/>
+                    <filter string="Approved" name="filter_status_approved" domain="[('state', '=', 'approved')]"/>
+                    <filter string="Posted" name="filter_status_posted" domain="[('state', '=', 'poested')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Pettycash" name='groupby_pettycash_type' domain="[]" context="{'group_by': 'pettycash_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="asft_pettycash_action">
+            <field name="name">Request Petty Cash</field>
+            <field name="res_model">asft.pettycash</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

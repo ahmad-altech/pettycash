@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem 
+            id="main_petty_cash"
+            name="Pettycash"
+            sequence="18"
+            web_icon="asft_pettycash,static/description/menu.png"
+        />
+        <menuitem 
+            id="asft_petty_cash_menu"
+            name="Petty Cash"
+            parent="asft_pettycash.main_petty_cash"
+        />
+        <menuitem 
+            id="asft_petty_cash_pengajuan"
+            name="Request Petty Cash"
+            parent="asft_pettycash.asft_petty_cash_menu"
+            action="asft_pettycash.asft_pettycash_action"
+        />
+        <menuitem 
+            id="asft_petty_cash_expenses"
+            name="Expenses"
+            parent="asft_pettycash.asft_petty_cash_menu"
+            action="asft_pettycash.asft_pettycash_expense_action"
+        />
+        <menuitem 
+            id="asft_petty_cash_settings_menu"
+            name="Settings"
+            parent="asft_pettycash.main_petty_cash"
+        />
+        <menuitem 
+            id="asft_petty_cash_settings_type_menu"
+            name="Pettycash Type"
+            parent="asft_pettycash.asft_petty_cash_settings_menu"
+            action="asft_pettycash.asft_pettycash_type_action"
+        />
+    </data>
+</odoo>
